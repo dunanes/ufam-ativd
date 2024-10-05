@@ -14,6 +14,7 @@ Mat transformadaLogaritmica(const Mat& imagem);
 int main() {
     // Carregar a imagem de entrada
     Mat imagem = imread("input/apple.jpg");
+    Mat imagem_low = imread("input/low-contrast.png");
 
     if (imagem.empty()) {
         cout << "Erro ao carregar a imagem!" << endl;
@@ -22,12 +23,14 @@ int main() {
 
     // Aplicar as transformações
     Mat img_contraste = expansaoContrasteLinear(imagem);
+    Mat img_contraste_low = expansaoContrasteLinear(imagem_low);
     Mat img_compressao_expansao = compressaoExpansao(imagem, 0.5);  // Compressão (gamma < 1)
     Mat img_dente_serra = denteDeSerra(imagem);
     Mat img_logaritmica = transformadaLogaritmica(imagem);
 
     // Salvar as imagens resultantes
     imwrite("output/q5/expansao_contraste.jpg", img_contraste);
+    imwrite("output/q5/expansao_contraste-gray.jpg", img_contraste_low);
     imwrite("output/q5/compressao_expansao.jpg", img_compressao_expansao);
     imwrite("output/q5/dente_de_serra.jpg", img_dente_serra);
     imwrite("output/q5/transformada_logaritmica.jpg", img_logaritmica);
@@ -84,7 +87,7 @@ Mat compressaoExpansao(const Mat& imagem, float gamma) {
 // 3. Transformada Dente de Serra
 Mat denteDeSerra(const Mat& imagem) {
     Mat resultado = imagem.clone();
-    int periodo = 50;  // Define o período da função dente de serra
+    int periodo = 100;  // Define o período da função dente de serra
 
     // Aplicar a função de dente de serra
     for (int y = 0; y < imagem.rows; y++) {
