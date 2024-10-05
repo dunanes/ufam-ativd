@@ -87,27 +87,30 @@ Mat filtroMedia(const Mat& imagem, int ksize) {
 // Filtro dos k vizinhos mais próximos
 Mat filtroKProximos(const Mat& imagem, int k) {
     Mat resultado = imagem.clone();
-    Mat imagem_cinza;
-    cvtColor(imagem, imagem_cinza, COLOR_BGR2GRAY);
 
     for (int y = 1; y < imagem.rows - 1; y++) {
         for (int x = 1; x < imagem.cols - 1; x++) {
-            vector<int> vizinhos;
+            Vec3b& pixel = resultado.at<Vec3b>(y, x);
 
-            // Obter vizinhos 3x3
-            for (int j = -1; j <= 1; j++) {
-                for (int i = -1; i <= 1; i++) {
-                    vizinhos.push_back(imagem_cinza.at<uchar>(y + j, x + i));
+            for (int c = 0; c < 3; c++) {  // Processar cada canal de cor (B, G, R)
+                vector<int> vizinhos;
+
+                // Obter vizinhos 3x3
+                for (int j = -1; j <= 1; j++) {
+                    for (int i = -1; i <= 1; i++) {
+                        vizinhos.push_back(imagem.at<Vec3b>(y + j, x + i)[c]);
+                    }
                 }
-            }
 
-            // Ordenar e calcular média dos k menores valores
-            sort(vizinhos.begin(), vizinhos.end());
-            int soma = 0;
-            for (int i = 0; i < k; i++) {
-                soma += vizinhos[i];
+                // Ordenar e calcular média dos k menores valores
+                sort(vizinhos.begin(), vizinhos.end());
+                int soma = 0;
+                for (int i = 0; i < k; i++) {
+                    soma += vizinhos[i];
+                }
+
+                pixel[c] = saturate_cast<uchar>(soma / k);
             }
-            resultado.at<Vec3b>(y, x) = Vec3b(soma / k, soma / k, soma / k);
         }
     }
 
@@ -127,31 +130,34 @@ Mat filtroModa(const Mat& imagem, int ksize) {
 
     for (int y = 1; y < imagem.rows - 1; y++) {
         for (int x = 1; x < imagem.cols - 1; x++) {
-            vector<int> vizinhos;
+            Vec3b& pixel = resultado.at<Vec3b>(y, x);
 
-            // Obter vizinhos 3x3
-            for (int j = -1; j <= 1; j++) {
-                for (int i = -1; i <= 1; i++) {
-                    Vec3b pixel = imagem.at<Vec3b>(y + j, x + i);
-                    vizinhos.push_back(pixel[0]);  // Usar apenas canal B
+            for (int c = 0; c < 3; c++) {  // Processar cada canal de cor (B, G, R)
+                vector<int> vizinhos;
+
+                // Obter vizinhos 3x3
+                for (int j = -1; j <= 1; j++) {
+                    for (int i = -1; i <= 1; i++) {
+                        vizinhos.push_back(imagem.at<Vec3b>(y + j, x + i)[c]);
+                    }
                 }
+
+                // Calcular moda (valor mais frequente)
+                int moda = vizinhos[0];
+                int max_count = 1;
+                for (int i = 0; i < vizinhos.size(); i++) {
+                    int count = 1;
+                    for (int j = i + 1; j < vizinhos.size(); j++) {
+                        if (vizinhos[i] == vizinhos[j]) count++;
+                    }
+                    if (count > max_count) {
+                        max_count = count;
+                        moda = vizinhos[i];
+                    }
+                }
+
+                pixel[c] = moda;  // Aplicar moda ao canal de cor
             }
-
-            // Calcular moda (valor mais frequente)
-            int moda = vizinhos[0];
-            int max_count = 1;
-            for (int i = 0; i < vizinhos.size(); i++) {
-                int count = 1;
-                for (int j = i + 1; j < vizinhos.size(); j++) {
-                    if (vizinhos[i] == vizinhos[j]) count++;
-                }
-                if (count > max_count) {
-                    max_count = count;
-                    moda = vizinhos[i];
-                }
-            }
-
-            resultado.at<Vec3b>(y, x) = Vec3b(moda, moda, moda);  // Aplicar moda
         }
     }
 
