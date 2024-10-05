@@ -1,3 +1,7 @@
+/*
+Imagem negativa (inversão de cores).
+*/
+
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -8,7 +12,7 @@ using namespace std;
 Mat inverterCores(const Mat& imagem);
 
 int main() {
-    Mat imagem = imread("input/pokemon-trainer.jpg");
+    Mat imagem = imread("input/rainbow.jpg");
 
     if (imagem.empty()) {
         cout << "Erro ao carregar a imagem!" << endl;
@@ -18,8 +22,8 @@ int main() {
     // Chama a função para inverter as cores da imagem
     Mat imagem_negativa = inverterCores(imagem);
 
-    // Salva a imagem negativa em um arquivo
-    imwrite("output/imagem_negativa.jpg", imagem_negativa);
+    // Salva a imagem
+    imwrite("output/q2/imagem_negativa.jpg", imagem_negativa);
 
     return 0;
 }
@@ -38,7 +42,7 @@ Mat inverterCores(const Mat& imagem) {
 
             // Inverte cada canal de cor (R, G, B) subtraindo o valor de 255
             for (int c = 0; c < 3; c++) {
-                pixel[c] = 255 - pixel[c];  // Inverte o valor do canal
+                pixel[c] = 255 - pixel[c];
             }
         }
     }

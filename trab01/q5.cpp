@@ -1,3 +1,8 @@
+/*
+Quatro transformadas radiométricas: (1) Expansão de contraste linear, (2) Compressão e
+expansão, (3) Dente de serra e (4) Transformada do logaritmo.
+*/
+
 #include <cmath>
 #include <iostream>
 #include <opencv2/opencv.hpp>
@@ -13,7 +18,7 @@ Mat transformadaLogaritmica(const Mat& imagem);
 
 int main() {
     // Carregar a imagem de entrada
-    Mat imagem = imread("input/pokemon-trainer.jpg");
+    Mat imagem = imread("input/lenna.jpg");
 
     if (imagem.empty()) {
         cout << "Erro ao carregar a imagem!" << endl;
@@ -27,9 +32,9 @@ int main() {
     Mat img_logaritmica = transformadaLogaritmica(imagem);
 
     // Salvar as imagens resultantes
-    imwrite("output/expansao_contraste.jpg", img_contraste);
-    imwrite("output/compressao_expansao.jpg", img_compressao_expansao);
-    imwrite("output/dente_de_serra.jpg", img_dente_serra);
+    imwrite("output/q5/expansao_contraste.jpg", img_contraste);
+    imwrite("output/q5/compressao_expansao.jpg", img_compressao_expansao);
+    imwrite("output/q5/dente_de_serra.jpg", img_dente_serra);
     imwrite("output/transformada_logaritmica.jpg", img_logaritmica);
 
     return 0;
