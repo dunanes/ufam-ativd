@@ -1,0 +1,12 @@
+# Python
+.venv
+myenv
+
+# Saídas do C++
+
+*.out
+
+# Pasta com códigos ou imagens não utilizados
+
+backup/
+**/backup/
