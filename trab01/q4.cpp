@@ -18,7 +18,7 @@ void salvarHistograma(const vector<int>& histograma, const string& nome_arquivo)
 
 int main() {
     // Carregar a imagem
-    Mat imagem = imread("input/trainer.jpg");
+    Mat imagem = imread("input/apple.jpg");
 
     if (imagem.empty()) {
         cout << "Erro ao carregar a imagem!" << endl;
