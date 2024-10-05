@@ -97,3 +97,7 @@ Um algoritmo de Detecção de bordas, qualquer técnica. Pode ser necessário re
 ### Questão 08
 
 Extração de propriedades de cor usando o descritor BIC. Aproveita a redução da quantização da questão anterior. O resultado principal é um arquivo com os histogramas de pixels de borda e interior. Deve-se também gerar duas imagens, uma somente com os pixels de borda (com a cor original para os pixels de borda e os pixels de interior em branco) e outra com os pixels de interior (com a cor original para os pixels de interior e pixels de borda em branco).
+
+## Informações adicionais
+
+- Os gráficos foram feitos no Google Colab utilizando os códigos em python `plot-*.py` e fazendo o upload do histograma correspondente.

@@ -1,8 +1,3 @@
-/*
-Quatro transformadas radiométricas: (1) Expansão de contraste linear, (2) Compressão e
-expansão, (3) Dente de serra e (4) Transformada do logaritmo.
-*/
-
 #include <cmath>
 #include <iostream>
 #include <opencv2/opencv.hpp>
@@ -18,7 +13,7 @@ Mat transformadaLogaritmica(const Mat& imagem);
 
 int main() {
     // Carregar a imagem de entrada
-    Mat imagem = imread("input/lenna.jpg");
+    Mat imagem = imread("input/apple.jpg");
 
     if (imagem.empty()) {
         cout << "Erro ao carregar a imagem!" << endl;
@@ -35,7 +30,7 @@ int main() {
     imwrite("output/q5/expansao_contraste.jpg", img_contraste);
     imwrite("output/q5/compressao_expansao.jpg", img_compressao_expansao);
     imwrite("output/q5/dente_de_serra.jpg", img_dente_serra);
-    imwrite("output/transformada_logaritmica.jpg", img_logaritmica);
+    imwrite("output/q5/transformada_logaritmica.jpg", img_logaritmica);
 
     return 0;
 }
@@ -107,14 +102,14 @@ Mat denteDeSerra(const Mat& imagem) {
 // 4. Transformada Logarítmica
 Mat transformadaLogaritmica(const Mat& imagem) {
     Mat resultado = imagem.clone();
-    float c = 255 / log(1 + 255);  // Constante de normalização para ajustar a intensidade
+    float constante = 255 / log(1 + 255);  // Constante de normalização para ajustar a intensidade
 
     // Aplicar a transformação logarítmica
     for (int y = 0; y < imagem.rows; y++) {
         for (int x = 0; x < imagem.cols; x++) {
             Vec3b& pixel = resultado.at<Vec3b>(y, x);
             for (int c = 0; c < 3; c++) {
-                pixel[c] = saturate_cast<uchar>(c * log(1 + pixel[c]));
+                pixel[c] = saturate_cast<uchar>(constante * log(1 + pixel[c]));
             }
         }
     }
