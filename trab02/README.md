@@ -44,13 +44,13 @@ pip install -r requirements.txt
 O código `cenas_bic.py` identifica mudanças de cena com o descritor BIC. Para executar:
 
 ```bash
-python bic.py <nome-do-video>.mp4 <limiar>
+python cenas_bic.py <nome-do-video>.mp4 <limiar>
 ```
 
 Exemplo:
 
 ```bash
-python bic.py gato.mp4 0.5
+python cenas_bic.py gato.mp4 0.5
 ```
 
 Esse comando processa o vídeo `gato.mp4` com um limiar de similaridade de `0.5` e salva os resultados em `cenas_bic/gato/`.
